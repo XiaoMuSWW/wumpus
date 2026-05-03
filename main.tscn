@@ -1,0 +1,176 @@
+[gd_scene format=4 uid="uid://d5j8imlem66l"]
+
+[ext_resource type="Texture2D" uid="uid://bkaowint3ry50" path="res://public/normal_ground.png" id="1_0xm2m"]
+[ext_resource type="Script" uid="uid://b1v3q46atkq4b" path="res://MapManager.cs" id="1_1bvp3"]
+[ext_resource type="Script" uid="uid://ci8qkjl7eoak7" path="res://MemoryMapLayer.cs" id="2_dg77c"]
+[ext_resource type="Texture2D" uid="uid://cmcgfabk1c1pj" path="res://public/hole.png" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://bkn6yfwthl48s" path="res://public/gold.png" id="3_h2yge"]
+[ext_resource type="Texture2D" uid="uid://xexewade8u7g" path="res://public/character/front.png" id="5_5vw27"]
+[ext_resource type="Script" uid="uid://cpa4kmbbbrjdl" path="res://mainCharacter.cs" id="6_4c57u"]
+[ext_resource type="Texture2D" uid="uid://bycu73uospij4" path="res://public/monster.png" id="6_efxa6"]
+[ext_resource type="Texture2D" uid="uid://dnuknjqxi1eqf" path="res://public/character/left.png" id="6_kek77"]
+[ext_resource type="Texture2D" uid="uid://s6akbws81dvn" path="res://public/character/back.png" id="7_4c57u"]
+[ext_resource type="Texture2D" uid="uid://dx7phxp15h4ko" path="res://public/character/right.png" id="8_efxa6"]
+[ext_resource type="Texture2D" uid="uid://dlhlyhcqodpg" path="res://public/memory.png" id="11_efxa6"]
+[ext_resource type="Script" uid="uid://dnkfabsl0ggl8" path="res://os_agent.cs" id="13_ycdy4"]
+[ext_resource type="Script" uid="uid://cj7eagow1l42k" path="res://rl_agent.cs" id="14_w48qg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ycdy4"]
+texture = ExtResource("11_efxa6")
+texture_region_size = Vector2i(1, 1)
+0:0/0 = 0
+1:0/0 = 0
+3:0/0 = 0
+2:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_w48qg"]
+tile_size = Vector2i(1, 1)
+sources/0 = SubResource("TileSetAtlasSource_ycdy4")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1bvp3"]
+texture = ExtResource("1_0xm2m")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lquwl"]
+texture = ExtResource("2_h2yge")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_7mycd"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_1bvp3")
+sources/1 = SubResource("TileSetAtlasSource_lquwl")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7mycd"]
+texture = ExtResource("3_h2yge")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_272bh"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_7mycd")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_dg77c"]
+texture = ExtResource("6_efxa6")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ycdy4"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_dg77c")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_efxa6"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dg77c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_5vw27")
+}],
+"loop": true,
+"name": &"face_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_kek77")
+}],
+"loop": true,
+"name": &"face_left",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_4c57u")
+}],
+"loop": true,
+"name": &"face_on",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_efxa6")
+}],
+"loop": true,
+"name": &"face_right",
+"speed": 5.0
+}]
+
+[sub_resource type="Gradient" id="Gradient_4c57u"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_efxa6"]
+gradient = SubResource("Gradient_4c57u")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Node2D" type="Node2D" unique_id=2146872964]
+
+[node name="UIlayer" type="CanvasLayer" parent="." unique_id=1484124940]
+layer = 0
+offset = Vector2(66.075, 0)
+transform = Transform2D(1, 0, 0, 1, 66.075, 0)
+
+[node name="MemoryMapLayer" type="TileMapLayer" parent="UIlayer" unique_id=1269440460]
+modulate = Color(1, 1, 1, 0.46666667)
+light_mask = 0
+position = Vector2(750, 150)
+scale = Vector2(32, 32)
+tile_set = SubResource("TileSet_w48qg")
+script = ExtResource("2_dg77c")
+
+[node name="MapManager" type="Node2D" parent="." unique_id=614502212 node_paths=PackedStringArray("baseGroundLayer", "GoldLayer", "WumpusLayer")]
+script = ExtResource("1_1bvp3")
+seed = 6
+mapSize = 4
+baseGroundLayer = NodePath("MapLayer")
+GoldLayer = NodePath("GoldLayer")
+WumpusLayer = NodePath("WumpusLayer")
+
+[node name="MapLayer" type="TileMapLayer" parent="MapManager" unique_id=1654656308]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAQAAAAAAAAABAAMAAAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAQAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_7mycd")
+
+[node name="GoldLayer" type="TileMapLayer" parent="MapManager" unique_id=1454136398]
+tile_map_data = PackedByteArray("AAACAAEAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_272bh")
+
+[node name="WumpusLayer" type="TileMapLayer" parent="MapManager" unique_id=4343074]
+tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_ycdy4")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=560336402]
+color = Color(0.1813, 0.24818501, 0.49, 1)
+
+[node name="MainCharacter" type="CharacterBody2D" parent="." unique_id=1947304623 node_paths=PackedStringArray("mapManager", "memoryShower", "osAgent", "rlAgent")]
+position = Vector2(32, 32)
+slide_on_ceiling = false
+script = ExtResource("6_4c57u")
+mapManager = NodePath("../MapManager")
+memoryShower = NodePath("../UIlayer/MemoryMapLayer")
+osAgent = NodePath("os_agent")
+rlAgent = NodePath("rl_agent")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainCharacter" unique_id=1165923771]
+shape = SubResource("CircleShape2D_efxa6")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MainCharacter" unique_id=1336636461]
+sprite_frames = SubResource("SpriteFrames_dg77c")
+animation = &"face_down"
+autoplay = "face_down"
+
+[node name="PointLight2D" type="PointLight2D" parent="MainCharacter" unique_id=1988326328]
+texture = SubResource("GradientTexture2D_efxa6")
+
+[node name="Camera2D" type="Camera2D" parent="MainCharacter" unique_id=773007512]
+zoom = Vector2(1.52, 1.52)
+
+[node name="os_agent" type="Node" parent="MainCharacter" unique_id=189184435]
+script = ExtResource("13_ycdy4")
+metadata/_custom_type_script = "uid://dnkfabsl0ggl8"
+
+[node name="rl_agent" type="Node" parent="MainCharacter" unique_id=510893691]
+script = ExtResource("14_w48qg")
+metadata/_custom_type_script = "uid://cj7eagow1l42k"
