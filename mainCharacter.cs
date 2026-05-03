@@ -103,7 +103,7 @@ public partial class mainCharacter : CharacterBody2D
 		// 2. 环境执行动作并生成影响
 		ExecuteAction(action);
 
-		// 3. 终结判断
+		// 3. 最终判断
 		bool isDone = false;
 		var currGridType = mapManager.GetGridType(logicPosition);
 		if (currGridType == MapManager.GridType.Hole || currGridType == MapManager.GridType.Wumpus)
@@ -176,18 +176,33 @@ public partial class mainCharacter : CharacterBody2D
 			shot(shotDirection);
 		}
 	}
-
+	/// <summary>
+	/// 设置位置
+	/// </summary>
+	/// <param name="pos">逻辑坐标位置（基于棋盘网格的坐标）</param>
+	/// <remarks>
+	/// 此方法将逻辑坐标转换为实际像素位置，同时更改角色的两类坐标
+	/// </remarks>
 	public void set_position(Vector2I pos)
 	{
 		logicPosition = pos;
 		Position = pos * stepSize + middle_bias;
 	}
-	
+	/// <summary>
+	/// 向某处射箭
+	/// </summary>
+	/// <param name="direction">箭头方向</param>
+	/// <remarks>
+	/// 其隐含了当前坐标logicPostion，事实上它发射了shotTo信号
+	/// </remarks>
 	public void shot(Vector2I direction)
 	{
 		EmitSignal(SignalName.shotTo, logicPosition, direction);
 	}
-	
+	/// <summary>
+	/// 挖掘动作
+	/// </summary>
+	/// <param name="pos">被挖掘的位置</param>
 	public void dig(Vector2I pos)
 	{
 		EmitSignal(SignalName.digAt, pos);
@@ -195,7 +210,10 @@ public partial class mainCharacter : CharacterBody2D
 			GD.Print("得到金矿在:", pos);
 		}
 	}
-	
+	/// <summary>
+	/// 通过移动产生感知
+	/// </summary>
+	/// <param name="pos">感知目标</param>
 	public void percepte_move(Vector2I pos)
 	{
 		if (memory.ContainsKey(pos)) return;
@@ -220,7 +238,10 @@ public partial class mainCharacter : CharacterBody2D
 			memoryShower.onMemoryChange(pos, bools);
 		}
 	}
-	
+	/// <summary>
+	/// 通过挖掘产生的感知
+	/// </summary>
+	/// <param name="pos">感知目标位置</param>
 	public void percepte_dig(Vector2I pos)
 	{
 		if (!memory.ContainsKey(pos)) return; 
@@ -232,7 +253,10 @@ public partial class mainCharacter : CharacterBody2D
 		}
 		memory[pos][2] = false;
 	}
-	
+	/// <summary>
+	/// 通过尖叫声产生的感知
+	/// </summary>
+	/// <param name="isScream">是否真听见了尖叫</param>
 	public void percepte_scream(bool isScream)
 	{
 		var scentedPositions = new List<Vector2I>();
@@ -263,7 +287,10 @@ public partial class mainCharacter : CharacterBody2D
 			}
 		}
 	}
-	
+	/// <summary>
+	/// 检查是否无路可走，即到达最终状态
+	/// </summary>
+	/// <returns>表示是否到达最终状态</returns>
 	private bool CheckIsFinal()
 	{
 		bool hasFrontier = false;
@@ -294,6 +321,9 @@ public partial class mainCharacter : CharacterBody2D
 		return true;
 	}
 
+	/// <summary>
+	/// 重置状态为初始状态
+	/// </summary>
 	private void reSetStatu()
 	{
 		memory.Clear();
@@ -307,7 +337,15 @@ public partial class mainCharacter : CharacterBody2D
 		percepte_move(logicPosition);
 	}
 	
+	/// <summary>
+	/// 当胜利时触发的槽
+	/// </summary>
+	/// <param name="pos">用于配合信号，实际上在这个类中无作用</param>
 	private void onSuccess(Vector2I pos) => GD.Print("Success Event Fired,成功");
 	
+	/// <summary>
+	/// 当失败时触发的槽
+	/// </summary>
+	/// <param name="pos">用于配合信号，实际上在这个类中无作用</param>
 	private void onFailed(Vector2I pos) => GD.Print("Failed Event Fired,失败");
 }
