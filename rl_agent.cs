@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 [GlobalClass]
-// 基于标准的 Q-Learning 与环境接口同步设计的 RL Agent
+// 基于标准的 Q-Learning 与环境接口同步设计的 RL Agent，状态由坐标定义，专精单张地图探索
 public partial class rl_agent : Node
 {
 	// Q-Table: 状态字符串 -> 动作价值数组
@@ -15,8 +15,10 @@ public partial class rl_agent : Node
 	[Export] public float Epsilon = 0.15f; // 探索率
 
 	private const int ActionCount = 9; // 与 AgentAction 中的实际行动枚举数量对应
+
 	private string lastState;
 	private int lastAction;
+
 	private float stepReward = 0.0f; // 在物理帧内临时聚拢此Step导致的所有Reward事件
 	
 	private RandomNumberGenerator rng = new RandomNumberGenerator();
@@ -82,6 +84,11 @@ public partial class rl_agent : Node
 		qTable[lastState][lastAction] += LearningRate * (stepReward + DiscountFactor * maxNextQ - currentQ);
 	}
 
+	/// <summary>
+	/// 将游戏状态转换为状态键
+	/// </summary>
+	/// <param name="character">角色</param>
+	/// <returns></returns> 状态键<summary>
 	private string GetStateKey(mainCharacter character)
 	{
 		Vector2I pos = character.logicPosition;
