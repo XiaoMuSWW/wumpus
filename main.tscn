@@ -13,7 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://dx7phxp15h4ko" path="res://public/character/right.png" id="8_efxa6"]
 [ext_resource type="Texture2D" uid="uid://dlhlyhcqodpg" path="res://public/memory.png" id="11_efxa6"]
 [ext_resource type="Script" uid="uid://dnkfabsl0ggl8" path="res://os_agent.cs" id="13_ycdy4"]
-[ext_resource type="Script" uid="uid://cj7eagow1l42k" path="res://rl_agent.cs" id="14_w48qg"]
+[ext_resource type="Script" uid="uid://x0r0tojey24i" path="res://q_agent.cs" id="14_w48qg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ycdy4"]
 texture = ExtResource("11_efxa6")
@@ -144,14 +144,16 @@ tile_set = SubResource("TileSet_ycdy4")
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=560336402]
 color = Color(0.1813, 0.24818501, 0.49, 1)
 
-[node name="MainCharacter" type="CharacterBody2D" parent="." unique_id=1947304623 node_paths=PackedStringArray("mapManager", "memoryShower", "osAgent", "rlAgent")]
+[node name="MainCharacter" type="CharacterBody2D" parent="." unique_id=1947304623 node_paths=PackedStringArray("mapManager", "memoryShower", "osAgent", "qAgent")]
 position = Vector2(32, 32)
 slide_on_ceiling = false
 script = ExtResource("6_4c57u")
 mapManager = NodePath("../MapManager")
 memoryShower = NodePath("../UIlayer/MemoryMapLayer")
 osAgent = NodePath("os_agent")
-rlAgent = NodePath("q_agent")
+qAgent = NodePath("q_agent")
+AgentType = "Q"
+actionCooldown = 0.01
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainCharacter" unique_id=1165923771]
 shape = SubResource("CircleShape2D_efxa6")
@@ -171,6 +173,6 @@ zoom = Vector2(1.52, 1.52)
 script = ExtResource("13_ycdy4")
 metadata/_custom_type_script = "uid://dnkfabsl0ggl8"
 
-[node name="q_agent" type="Node" parent="MainCharacter" unique_id=510893691]
+[node name="q_agent" type="Node" parent="MainCharacter" unique_id=1402525730]
 script = ExtResource("14_w48qg")
-metadata/_custom_type_script = "uid://cj7eagow1l42k"
+metadata/_custom_type_script = "uid://x0r0tojey24i"

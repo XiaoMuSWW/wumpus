@@ -121,7 +121,7 @@ public partial class mainCharacter : CharacterBody2D
 		if (Auto)
 		{
 			if (AgentType == "OS" && osAgent != null) osAgent.Feedback(this, isDone);
-			else if (AgentType == "RL" && qAgent != null) qAgent.Feedback(this, isDone);
+			else if (AgentType == "Q" && qAgent != null) qAgent.Feedback(this, isDone);
 		}
 
 		// 5. 局后重置

@@ -76,8 +76,16 @@ public partial class q_agent : Node
 			if (!qTable.ContainsKey(nextState))
 				qTable[nextState] = new float[ActionCount];
 			maxNextQ = qTable[nextState].Max();
+			
 		}
-
+		if (isDone)
+		{
+			if (Epsilon >= 0.01f)
+			{
+				Epsilon-=0.01f;
+				GD.Print("探索率减少",Epsilon);
+			}
+		}
 		float currentQ = qTable[lastState][lastAction];
 		
 		// TD-Learning 更新公式: Q(s,a) = Q(s,a) + alpha *[Reward + gamma * max_a' Q(s',a') - Q(s,a)]
