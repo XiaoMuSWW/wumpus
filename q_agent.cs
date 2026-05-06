@@ -5,7 +5,7 @@ using System.Linq;
 
 [GlobalClass]
 // 基于标准的 Q-Learning 与环境接口同步设计的 RL Agent，状态由坐标定义，专精单张地图探索
-public partial class rl_agent : Node
+public partial class q_agent : Node
 {
 	// Q-Table: 状态字符串 -> 动作价值数组
 	private System.Collections.Generic.Dictionary<string, float[]> qTable = new();

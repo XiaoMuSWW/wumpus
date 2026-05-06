@@ -10,7 +10,7 @@ public partial class mainCharacter : CharacterBody2D
 	[Export] public MapManager mapManager;
 	[Export] public MemoryMapLayer memoryShower;
 	[Export] public os_agent osAgent;  // 联机搜索代理
-	[Export] public rl_agent rlAgent;  // 强化学习代理
+	[Export] public q_agent qAgent;  // 强化学习代理
 	[Export] private int stepSize = 64;[Export] private bool Auto = true;
 	[Export] private string AgentType = "OS";[Export] private Vector2I middle_bias = new Vector2I(32, 32);[Export] private float actionCooldown = 0.5f;
 
@@ -49,13 +49,13 @@ public partial class mainCharacter : CharacterBody2D
 		failed += onFailed;
 
 		// 将奖励信号关联到 RL Agent
-		if (rlAgent != null)
+		if (qAgent != null)
 		{
-			findNewRegion += rlAgent.OnFindNewRegion;
-			getGold += rlAgent.OnGetGold;
-			isHeardScream += rlAgent.OnIsHeardScream;
-			success += rlAgent.OnSuccess;
-			failed += rlAgent.OnFailed;
+			findNewRegion += qAgent.OnFindNewRegion;
+			getGold += qAgent.OnGetGold;
+			isHeardScream += qAgent.OnIsHeardScream;
+			success += qAgent.OnSuccess;
+			failed += qAgent.OnFailed;
 		}
 
 		base._Ready();
@@ -78,8 +78,8 @@ public partial class mainCharacter : CharacterBody2D
 		{
 			if (AgentType == "OS" && osAgent != null)
 				action = osAgent.GetAction(this);
-			else if (AgentType == "RL" && rlAgent != null)
-				action = rlAgent.GetAction(this);
+			else if (AgentType == "Q" && qAgent != null)
+				action = qAgent.GetAction(this);
 		}
 		else
 		{
@@ -100,10 +100,10 @@ public partial class mainCharacter : CharacterBody2D
 
 		if (action == AgentAction.None && !isFinal) return;
 
-		// 2. 环境执行动作并生成影响
+		// 环境执行动作并生成影响
 		ExecuteAction(action);
 
-		// 3. 最终判断
+		// 最终判断
 		bool isDone = false;
 		var currGridType = mapManager.GetGridType(logicPosition);
 		if (currGridType == MapManager.GridType.Hole || currGridType == MapManager.GridType.Wumpus)
@@ -117,11 +117,11 @@ public partial class mainCharacter : CharacterBody2D
 			isDone = true;
 		}
 
-		// 4. 将 Step 反馈回执给代理（用于 RL的 Reward 结算或 OS 的局势追踪）
+		// 将 Step 反馈回执给代理
 		if (Auto)
 		{
 			if (AgentType == "OS" && osAgent != null) osAgent.Feedback(this, isDone);
-			else if (AgentType == "RL" && rlAgent != null) rlAgent.Feedback(this, isDone);
+			else if (AgentType == "RL" && qAgent != null) qAgent.Feedback(this, isDone);
 		}
 
 		// 5. 局后重置
@@ -130,7 +130,10 @@ public partial class mainCharacter : CharacterBody2D
 			reSetStatu();
 		}
 	}
-
+	/// <summary>
+	/// 动作接口
+	/// </summary>
+	/// <param name="action"></param>
 	private void ExecuteAction(AgentAction action)
 	{
 		Vector2I moveTo = logicPosition;

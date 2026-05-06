@@ -130,15 +130,15 @@ GoldLayer = NodePath("GoldLayer")
 WumpusLayer = NodePath("WumpusLayer")
 
 [node name="MapLayer" type="TileMapLayer" parent="MapManager" unique_id=1654656308]
-tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAMAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAQAAAAAAAAABAAMAAAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAQAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAQAAAAAAAAAAAAMAAAAAAAAAAAABAAAAAAAAAAAAAAABAAEAAAAAAAAAAAABAAIAAAAAAAAAAAABAAMAAAAAAAAAAAACAAAAAAAAAAAAAAACAAEAAAAAAAAAAAACAAIAAAAAAAAAAAACAAMAAAAAAAAAAAADAAAAAAAAAAAAAAADAAEAAQAAAAAAAAADAAIAAAAAAAAAAAADAAMAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_7mycd")
 
 [node name="GoldLayer" type="TileMapLayer" parent="MapManager" unique_id=1454136398]
-tile_map_data = PackedByteArray("AAACAAEAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAACAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_272bh")
 
 [node name="WumpusLayer" type="TileMapLayer" parent="MapManager" unique_id=4343074]
-tile_map_data = PackedByteArray("AAABAAEAAAAAAAAAAAA=")
+tile_map_data = PackedByteArray("AAABAAIAAAAAAAAAAAA=")
 tile_set = SubResource("TileSet_ycdy4")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="." unique_id=560336402]
@@ -151,7 +151,7 @@ script = ExtResource("6_4c57u")
 mapManager = NodePath("../MapManager")
 memoryShower = NodePath("../UIlayer/MemoryMapLayer")
 osAgent = NodePath("os_agent")
-rlAgent = NodePath("rl_agent")
+rlAgent = NodePath("q_agent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MainCharacter" unique_id=1165923771]
 shape = SubResource("CircleShape2D_efxa6")
@@ -171,6 +171,6 @@ zoom = Vector2(1.52, 1.52)
 script = ExtResource("13_ycdy4")
 metadata/_custom_type_script = "uid://dnkfabsl0ggl8"
 
-[node name="rl_agent" type="Node" parent="MainCharacter" unique_id=510893691]
+[node name="q_agent" type="Node" parent="MainCharacter" unique_id=510893691]
 script = ExtResource("14_w48qg")
 metadata/_custom_type_script = "uid://cj7eagow1l42k"
